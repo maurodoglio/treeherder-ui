@@ -1,0 +1,115 @@
+    <!DOCTYPE html>
+    <html ng-app>
+    <head>
+        <title>Treeherder layout draft</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular/controllers.js"></script>
+        <!-- Bootstrap -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="assets/css/treeherder.css" rel="stylesheet" media="screen">
+    </head>
+    <body ng-controller="MainController">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                  <a class="brand" href="#">Treeherder</a>
+                  <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                      Logged in as <a href="#" class="navbar-link">Username</a>
+                    </p>
+                    <form class="navbar-search pull-right">
+                        <span class="label label-success">0 unstarred</span>
+                        <input type="text" ng-model="query" class="search-query" placeholder="Search">
+                    </form>
+                    <!-- nav begin -->
+                        <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Tree info</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Infrastructure</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Filters</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown" ng-controller="DropDownMenuCtrl">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Trees<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="item in menu"><a href="{{item.url}}">{{item.name}}</a></li>
+                                </ul>
+                            </li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+
+                    <!-- nav end -->
+                  </div>
+                </div>
+            </div>
+        </div>
+            <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1">
+                    <ul class="nav nav-list">
+                        <li class="active"><a href="#">Jobs</a></li>
+                        <li><a href="#">Timeline</a></li>
+                        <li><a href="#">Machines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="jobs_list span11" ng-controller="JobsListCtrl">
+                    <div class="alert alert-success">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <!-- row1 -->
+                    <div ng-repeat="x in [1,2,3,4,5,6,7,8]" class="row-fluid">
+                        <a class="btn btn-info" data-toggle="collapse" data-target="#push{{x}}">
+                            {{push_sample.email}} - {{push_sample.timestamp}}
+                        </a>
+                        <ul id="push{{x}}" class="unstyled collapse">
+                            <li ng-repeat="revision in push_sample.revisions">
+                                <h5>{{revision.name}} - <a class="btn">{{revision.revision}}</a> <a class="btn">{{revision.bug_id}}</a></h5>
+                                <small>{{revision.message}}</small>
+                            </li>
+                        </ul>
+                        <table class="table table-condensed table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th ng-repeat="(grouper, group) in job_groups" colspan="{{group.length}}">{{grouper}}</th>
+                                <tr>
+                                    <th>Platform</th>
+                                    <th ng-repeat="job_type in job_types">
+                                        <span title="{{ job_type.jobtype__name }}">{{ job_type.jobtype__symbol }}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="platform in platforms | filter:query"><th>{{platform}}</th><td ng-repeat="job_type in job_types"></td></tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <!-- row end -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- modal window -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Modal header</h3>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="assets/js/bootstrap.js"></script>
+    </body>
+    </html>
